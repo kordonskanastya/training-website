@@ -3,22 +3,22 @@ function Morphology() {
     <main className="container px-4 py-4">
       <article>
         <section>
-          <h3 className="h3 text-success">Зовнішній вигляд</h3>
-          <p>Зайці - це маленькі тварини з м'яким пухнастим хутром, яке може бути різного кольору. Вони мають довгі вуха, великі очі та короткий хвіст.</p>
+          <h3 class="h3 text-success">Зовнішній вигляд</h3>
+          <p>Велика панда — це велика, масивна тварина з характерним чорно-білим забарвленням. Вона має круглу морду, короткий хвіст і густе хутро.</p>
         </section>
         <section>
-          <h3 className="h3 text-success">Особливості будови</h3>
+          <h3 class="h3 text-success">Особливості будови</h3>
           <ul>
-            <li>Довжина тіла 55—70 см, довжина клиноподібного хвоста 8—12 см, вага 4—10 кг.</li>
-            <li>Задні ноги в русака набагато довші за передні, ступні вузькі і витягнуті, повністю вкриті шерстю.</li>
-            <li>Вуха довгі, ланцетоподібні, пригнуті до голови, заходять далі, ніж кінець морди; по зовнішньому краю вуха йде темна смуга.</li>
+            <li>Довжина тіла 120—180 см, хвіст короткий — 10–15 см, вага дорослої особини 70–160 кг.</li>
+            <li>Передні й задні кінцівки майже однакової довжини, що забезпечує стійкість на землі.</li>
+            <li>На передніх лапах є псевдовеликий палець — видозмінена кістка зап'ястя, яка допомагає тримати бамбук.</li>
           </ul>
         </section>
-        <figure className="text-center">
-          <img src="https://tut-cikavo.com/images/7_new/young-hare.jpg" alt="Зайці на лузі" className="img-fluid rounded my-4"/>
-          <figcaption className="text-muted">Молодий заяць</figcaption>
+        <figure class="text-center">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" alt="Велика панда сидить" class="img-fluid rounded my-4" />
+          <figcaption class="text-muted">Велика панда у природному середовищі</figcaption>
         </figure>
-      </article>
+    </article>
     </main>
   );
 }

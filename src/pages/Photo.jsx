@@ -12,43 +12,41 @@ function Photo() {
   ];
 
   return (
-    <main className="container px-4 py-4 flex-grow-1">
-      <article>
-        <h2 className="h2 text-success mb-4">Фотогалерея зайців</h2>
-        <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-          <div className="carousel-indicators">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                data-bs-target="#carouselExampleIndicators"
-                data-bs-slide-to={index}
-                className={index === 0 ? "active" : ""}
-                aria-current={index === 0 ? "true" : "false"}
-                aria-label={`Slide ${index + 1}`}
-              ></button>
-            ))}
-          </div>
-          <div className="carousel-inner">
-            {images.map((image, index) => (
-              <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                <a href={image.src} target="_blank" rel="noopener noreferrer">
-                  <img src={image.src} className="d-block w-100" alt={image.alt} />
-                </a>
-              </div>
-            ))}
-          </div>
-          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
+    <main class="container py-4">
+      <div id="pandaCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#pandaCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#pandaCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#pandaCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-      </article>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <a href="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" class="d-block w-100" alt="Велика панда сидить" />
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="https://upload.wikimedia.org/wikipedia/commons/8/84/Panda_Cub_from_Wolong%2C_Sichuan%2C_China.JPG" target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Panda_Cub_from_Wolong%2C_Sichuan%2C_China.JPG" class="d-block w-100" alt="Панда з заповідника Волун" />
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="https://upload.wikimedia.org/wikipedia/commons/6/6d/Panda_Eating_Bamboo.jpg" target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Panda_Eating_Bamboo.jpg" class="d-block w-100" alt="Панда їсть бамбук" />
+            </a>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#pandaCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#pandaCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </main>
+
   );
 }
 
