@@ -2,14 +2,19 @@ function Nutrition() {
   return (
     <main className="container px-4 py-4 flex-grow-1">
       <section>
-        <h2 className="h2 text-success mb-4">Харчування зайців</h2>
-        <p>Зайці є травоїдними тваринами. Їх раціон включає:</p>
-        <ul className="list-group">
-          <li className="list-group-item">Траву, листя і кору дерев.</li>
-          <li className="list-group-item">Овочі, такі як морква та капуста.</li>
-          <li className="list-group-item">Воду, яку вони споживають у великих кількостях.</li>
-        </ul>
+        <article>
+          <h2 class="h2 text-success">Раціон панд</h2>
+          <p>Панди є всеїдними тваринами, але основою їхнього раціону є рослинна їжа. Їх раціон включає:</p>
+          <ul class="list-group">
+            <li class="list-group-item">Бамбук — становить понад 99% усього раціону.</li>
+            <li class="list-group-item">Паростки, листя та стебла різних видів бамбуку.</li>
+            <li class="list-group-item">Інші рослини, фрукти та овочі (переважно в неволі).</li>
+            <li class="list-group-item">Рідко — яйця або дрібні тварини (в дикій природі).</li>
+            <li class="list-group-item">Воду, яку панди п’ють з річок або струмків.</li>
+          </ul>
+      </article>
       </section>
+      
     </main>
   );
 }

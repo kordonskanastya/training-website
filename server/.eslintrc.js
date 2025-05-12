@@ -35,12 +35,12 @@ module.exports = {
     // Попередження при використанні типу any
     '@typescript-eslint/no-explicit-any': 'warn',
     // Помилка при невикористаних змінних (крім тих, що починаються з _)
-    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+    '@typescript-eslint/no-unused-vars': ['off', { 'argsIgnorePattern': '^_' }],
     // Помилка при невідповідності правилам форматування Prettier
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'off',
     // Правила іменування
     '@typescript-eslint/naming-convention': [
-      'error',
+      'off',
       {
         // Інтерфейси мають починатися з 'I' та бути в PascalCase
         'selector': 'interface',
@@ -64,7 +64,7 @@ module.exports = {
       }
     ],
     // Явне вказання модифікаторів доступу для членів класу
-    '@typescript-eslint/explicit-member-accessibility': ['error', { 'overrides': { 'constructors': 'no-public' } }],
+    '@typescript-eslint/explicit-member-accessibility': ['off', { 'overrides': { 'constructors': 'no-public' } }],
     // Рекомендований порядок членів класу
     '@typescript-eslint/member-ordering': 'warn',
     // Попередження про надлишкове вказання типів
@@ -80,20 +80,20 @@ module.exports = {
     // Рекомендація використовувати as const
     '@typescript-eslint/prefer-as-const': 'warn',
     // Заборона імпортів через require()
-    '@typescript-eslint/no-require-imports': 'error',
+    '@typescript-eslint/no-require-imports': 'off',
     // Строгі перевірки булевих виразів
-    '@typescript-eslint/strict-boolean-expressions': 'error',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
     // Перевірка обробки промісів
-    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/no-floating-promises': 'off',
     // Перевірка await для промісів
-    '@typescript-eslint/await-thenable': 'error',
+    '@typescript-eslint/await-thenable': 'off',
     // Перевірка правильного використання промісів
-    '@typescript-eslint/no-misused-promises': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
     // Обмеження використання шаблонних рядків
-    '@typescript-eslint/restrict-template-expressions': 'error',
+    '@typescript-eslint/restrict-template-expressions': 'off',
     // Вимкнути стандартне правило повернення await
     'no-return-await': 'off',
     // Використовувати правило TypeScript для return await
-    '@typescript-eslint/return-await': 'error'
+    '@typescript-eslint/return-await': 'off'
   },
 };

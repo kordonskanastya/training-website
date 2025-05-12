@@ -25,8 +25,8 @@ function App() {
               <Route path="/nutrition" element={<Nutrition />} />
               <Route path="/population" element={<Population />} />
               <Route path="/photo" element={<Photo />} />
-              <Route path="/search" element={<Search />} />
               <Route path="/rehabilitation" element={<Rehabilitation />} />
+              <Route path="/search" element={<Search />} />
             </Routes>
           </div>
           <Footer />

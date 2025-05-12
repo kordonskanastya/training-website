@@ -4,9 +4,9 @@ export const swaggerSpec = {
     openapi: '3.0.0',
     // Загальна інформація про API
     info: {
-        title: 'API Сайту про Зайців',
+        title: 'API Сайту про панд',
         version: '1.0.0',
-        description: 'Документація API для Сайту про Зайців',
+        description: 'Документація API для Сайту про панд',
     },
     // Налаштування серверів для тестування API
     servers: [
@@ -20,13 +20,13 @@ export const swaggerSpec = {
     ],
     // Визначення кінцевих точок (endpoints) REST API та операцій з ними
     paths: {
-        '/api/rabbits': {
-            // GET запит для отримання всіх зайців
+        '/api/pandas': {
+            // GET запит для отримання всіх панд
             get: {
-                summary: 'Отримати всіх зайців',
+                summary: 'Отримати всіх панд',
                 responses: {
                     '200': {
-                        description: 'Список всіх зайців',
+                        description: 'Список всіх панд',
                         content: {
                             'application/json': {
                                 schema: {
@@ -39,9 +39,9 @@ export const swaggerSpec = {
                 },
             },
 
-            // POST запит для створення нового зайця
+            // POST запит для створення нового панди
             post: {
-                summary: 'Створити нового зайця',
+                summary: 'Створити нового панди',
                 requestBody: {
                     required: true,
                     content: {
@@ -52,7 +52,7 @@ export const swaggerSpec = {
                 },
                 responses: {
                     '201': {
-                        description: "Створений об'єкт зайця",
+                        description: "Створений об'єкт панди",
                         content: {
                             'application/json': {
                                 schema: { $ref: '#/components/schemas/Rabbit' },
@@ -63,43 +63,43 @@ export const swaggerSpec = {
             },
         },
 
-        // Операції для конкретного зайця за ID
-        '/api/rabbits/{id}': {
-            // GET запит для отримання зайця за ID
+        // Операції для конкретного панди за ID
+        '/api/pandas/{id}': {
+            // GET запит для отримання панди за ID
             get: {
-                summary: 'Отримати зайця за ID',
+                summary: 'Отримати панди за ID',
                 parameters: [
                     {
                         in: 'path',
                         name: 'id',
                         required: true,
                         schema: { type: 'string' },
-                        description: 'ID зайця',
+                        description: 'ID панди',
                     },
                 ],
                 responses: {
                     '200': {
-                        description: "Об'єкт зайця",
+                        description: "Об'єкт панди",
                         content: {
                             'application/json': {
                                 schema: { $ref: '#/components/schemas/Rabbit' },
                             },
                         },
                     },
-                    '404': { description: 'Зайця не знайдено' },
+                    '404': { description: 'панди не знайдено' },
                 },
             },
 
-            // PUT запит для повного оновлення зайця за ID
+            // PUT запит для повного оновлення панди за ID
             put: {
-                summary: 'Повністю оновити зайця',
+                summary: 'Повністю оновити панди',
                 parameters: [
                     {
                         in: 'path',
                         name: 'id',
                         required: true,
                         schema: { type: 'string' },
-                        description: 'ID зайця',
+                        description: 'ID панди',
                     },
                 ],
                 requestBody: {
@@ -112,26 +112,26 @@ export const swaggerSpec = {
                 },
                 responses: {
                     '200': {
-                        description: "Оновлений об'єкт зайця",
+                        description: "Оновлений об'єкт панди",
                         content: {
                             'application/json': {
                                 schema: { $ref: '#/components/schemas/Rabbit' },
                             },
                         },
                     },
-                    '404': { description: 'Зайця не знайдено' },
+                    '404': { description: 'панди не знайдено' },
                 },
             },
-            // PATCH запит для часткового оновлення зайця за ID
+            // PATCH запит для часткового оновлення панди за ID
             patch: {
-                summary: 'Частково оновити зайця',
+                summary: 'Частково оновити панди',
                 parameters: [
                     {
                         in: 'path',
                         name: 'id',
                         required: true,
                         schema: { type: 'string' },
-                        description: 'ID зайця',
+                        description: 'ID панди',
                     },
                 ],
                 requestBody: {
@@ -144,31 +144,31 @@ export const swaggerSpec = {
                 },
                 responses: {
                     '200': {
-                        description: "Оновлений об'єкт зайця",
+                        description: "Оновлений об'єкт панди",
                         content: {
                             'application/json': {
                                 schema: { $ref: '#/components/schemas/Rabbit' },
                             },
                         },
                     },
-                    '404': { description: 'Зайця не знайдено' },
+                    '404': { description: 'панди не знайдено' },
                 },
             },
-            // DELETE запит для видалення даних про зайця за ID
+            // DELETE запит для видалення даних про панди за ID
             delete: {
-                summary: 'Видалити дані про зайця',
+                summary: 'Видалити дані про панди',
                 parameters: [
                     {
                         in: 'path',
                         name: 'id',
                         required: true,
                         schema: { type: 'string' },
-                        description: 'ID зайця',
+                        description: 'ID панди',
                     },
                 ],
                 responses: {
                     '200': { description: 'Повідомлення про успішне видалення' },
-                    '404': { description: 'Зайця не знайдено' },
+                    '404': { description: 'панди не знайдено' },
                 },
             },
         },
@@ -185,28 +185,28 @@ export const swaggerSpec = {
                 properties: {
                     name: {
                         type: 'string',
-                        description: "Ім'я зайця",
+                        description: "Ім'я панди",
                     },
                     age: {
                         type: 'number',
-                        description: 'Вік зайця у роках',
+                        description: 'Вік панди у роках',
                     },
                     height: {
                         type: 'number',
-                        description: 'Висота зайця в сантиметрах',
+                        description: 'Висота панди в сантиметрах',
                     },
                     weight: {
                         type: 'number',
-                        description: 'Вага зайця в кілограмах',
+                        description: 'Вага панди в кілограмах',
                     },
                     gender: {
                         type: 'string',
                         enum: ['male', 'female'],
-                        description: 'Стать зайця',
+                        description: 'Стать панди',
                     },
                     description: {
                         type: 'string',
-                        description: "Опис зайця (необов'язкове поле)",
+                        description: "Опис панди (необов'язкове поле)",
                     },
                 },
             },

@@ -7,16 +7,16 @@ import { Toast } from 'bootstrap';
 
 // Компонент для управління зайцями, які перебувають на реабілітації, через API
 function Rehabilitation() {  // Стан для зберігання даних та стану інтерфейсу
-  const [rabbits, setRabbits] = useState([]);
+  const [pandas, setRabbits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Стан для модального вікна видалення
-  const [rabbitToDelete, setRabbitToDelete] = useState(null); // Ідентифікатор зайця для видалення
+  const [rabbitToDelete, setRabbitToDelete] = useState(null); // Ідентифікатор пади для видалення
   const [currentRabbit, setCurrentRabbit] = useState(null);
   const [toastMessage, setToastMessage] = useState({ text: '', type: 'success' });
-  
+
   // Посилання до елемента спливаючих сповіщень toast
   const toastRef = useRef(null);
   // Стан форми для додавання/редагування зайців
@@ -42,13 +42,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
       toastElement.show();
     }
   }, [toastMessage]);
-  
+
   // Отримуємо всіх зайців з API
   const fetchRabbits = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(`${API_BASE_URL}/rabbits`);
+      const response = await axios.get(`${API_BASE_URL}/pandas`);
       setRabbits(Array.isArray(response.data) ? response.data : []);
 
     } catch (err) {
@@ -65,19 +65,19 @@ function Rehabilitation() {  // Стан для зберігання даних 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let processedValue = value;
-    
+
     // Конвертуємо числові значення з рядків у числа
     if (['age', 'height', 'weight'].includes(name)) {
       processedValue = value === '' ? '' : Number(value);
     }
-    
+
     setFormData({
       ...formData,
       [name]: processedValue
     });
   };
 
-  // Відкриваємо модальне вікно для додавання нового зайця
+  // Відкриваємо модальне вікно для додавання нового пади
   const handleShowAddModal = () => {
     setFormData({
       name: '',
@@ -90,89 +90,89 @@ function Rehabilitation() {  // Стан для зберігання даних 
     setShowAddModal(true);
   };
 
-  // Відкриваємо модальне вікно для редагування зайця
-  const handleShowEditModal = (rabbit) => {
-    setCurrentRabbit(rabbit);
+  // Відкриваємо модальне вікно для редагування пади
+  const handleShowEditModal = (panda) => {
+    setCurrentRabbit(panda);
     setFormData({
-      name: rabbit.name,
-      age: rabbit.age,
-      height: rabbit.height,
-      weight: rabbit.weight,
-      gender: rabbit.gender,
-      description: rabbit.description || ''
+      name: panda.name,
+      age: panda.age,
+      height: panda.height,
+      weight: panda.weight,
+      gender: panda.gender,
+      description: panda.description || ''
     });
     setShowEditModal(true);
   };
 
-  // Додаємо нового зайця
+  // Додаємо нового пади
   const handleAddRabbit = async (e) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      const response = await axios.post(`${API_BASE_URL}/rabbits`, formData);
+      const response = await axios.post(`${API_BASE_URL}/pandas`, formData);
       const newRabbit = response.data;
-      setRabbits([...rabbits, newRabbit]);
+      setRabbits([...pandas, newRabbit]);
       setShowAddModal(false);
-      setToastMessage({ text: `Зайця "${newRabbit.name}" успішно додано!`, type: 'success' });
+      setToastMessage({ text: `панда "${newRabbit.name}" успішно додано!`, type: 'success' });
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при створенні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при створенні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при додаванні зайця:', err);
+      console.error('Помилка при додаванні пади:', err);
 
     } finally {
       setLoading(false);
     }
   };
 
-  // Оновлюємо існуючого зайця
+  // Оновлюємо існуючого пади
   const handleUpdateRabbit = async (e) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      const response = await axios.put(`${API_BASE_URL}/rabbits/${currentRabbit._id}`, formData);
+      const response = await axios.put(`${API_BASE_URL}/pandas/${currentRabbit._id}`, formData);
       const updatedRabbit = response.data;
-      setRabbits(rabbits.map(rabbit => 
-        rabbit._id === currentRabbit._id ? updatedRabbit : rabbit
+      setRabbits(pandas.map(panda =>
+        panda._id === currentRabbit._id ? updatedRabbit : panda
       ));
       setShowEditModal(false);
-      setToastMessage({ text: `Дані про зайця "${updatedRabbit.name}" оновлено!`, type: 'success' });
+      setToastMessage({ text: `Дані про пади "${updatedRabbit.name}" оновлено!`, type: 'success' });
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при оновленні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при оновленні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при оновленні зайця:', err);
-      
+      console.error('Помилка при оновленні пади:', err);
+
     } finally {
       setLoading(false);
     }
   };
-   
+
   // Показуємо модальне вікно підтвердження видалення
-  const handleShowDeleteModal = (rabbit) => {
-    setRabbitToDelete(rabbit);
+  const handleShowDeleteModal = (panda) => {
+    setRabbitToDelete(panda);
     setShowDeleteModal(true);
   };
 
-  // Видаляємо зайця
+  // Видаляємо пади
   const handleDeleteRabbit = async () => {
     try {
       setLoading(true);
-      await axios.delete(`${API_BASE_URL}/rabbits/${rabbitToDelete._id}`);
-      setRabbits(rabbits.filter(rabbit => rabbit._id !== rabbitToDelete._id));
-      setToastMessage({ text: `Зайця "${rabbitToDelete.name}" успішно видалено!`, type: 'success' });
+      await axios.delete(`${API_BASE_URL}/pandas/${rabbitToDelete._id}`);
+      setRabbits(pandas.filter(panda => panda._id !== rabbitToDelete._id));
+      setToastMessage({ text: `панда "${rabbitToDelete.name}" успішно видалено!`, type: 'success' });
       setShowDeleteModal(false); // Закриваємо модальне вікно
-      setRabbitToDelete(null); // Очищаємо дані зайця для видалення
+      setRabbitToDelete(null); // Очищаємо дані пади для видалення
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при видаленні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при видаленні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при видаленні зайця:', err);
+      console.error('Помилка при видаленні пади:', err);
 
     } finally {
       setLoading(false);
@@ -184,17 +184,17 @@ function Rehabilitation() {  // Стан для зберігання даних 
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('uk-UA', options);
   };
-  
+
   return (
     <main className="container px-4 py-4">
       <header className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="h2 text-success">Реабілітація зайців</h1>
-        <button 
-          className="btn btn-success" 
+        <button
+          className="btn btn-success"
           onClick={handleShowAddModal}
           disabled={loading}
         >
-          Додати зайця
+          Додати пади
         </button>
       </header>
 
@@ -204,14 +204,14 @@ function Rehabilitation() {  // Стан для зберігання даних 
           {error}
         </section>
       )}
-      
+
       {/* Toast для повідомлень */}
       <div className="toast-container position-fixed bottom-0 end-0 p-3">
-        <div 
+        <div
           ref={toastRef}
-          className={`toast align-items-center text-white bg-${toastMessage.type} border-0`} 
-          role="alert" 
-          aria-live="assertive" 
+          className={`toast align-items-center text-white bg-${toastMessage.type} border-0`}
+          role="alert"
+          aria-live="assertive"
           aria-atomic="true"
           data-bs-delay="3000"
         >
@@ -219,10 +219,10 @@ function Rehabilitation() {  // Стан для зберігання даних 
             <div className="toast-body">
               {toastMessage.text}
             </div>
-            <button 
-              type="button" 
-              className="btn-close btn-close-white me-2 m-auto" 
-              data-bs-dismiss="toast" 
+            <button
+              type="button"
+              className="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"
               aria-label="Закрити"
             ></button>
           </div>
@@ -238,14 +238,14 @@ function Rehabilitation() {  // Стан для зберігання даних 
           <p className="mt-2">Завантаження записів зайців...</p>
         </div>
       )}
-      
-      {!loading && rabbits.length === 0 && (
+
+      {!loading && pandas.length === 0 && (
         <section className="alert alert-info">
-          Немає доступних записів про зайців у реабілітації. Додайте першого зайця!
+          Немає доступних записів про зайців у реабілітації. Додайте першого пади!
         </section>
       )}
-      
-      {!loading && rabbits.length > 0 && (
+
+      {!loading && pandas.length > 0 && (
         <section className="table-responsive">
           <table className="table table-striped table-bordered table-hover vertical-align-middle">
             <thead>
@@ -261,20 +261,20 @@ function Rehabilitation() {  // Стан для зберігання даних 
               </tr>
             </thead>
             <tbody>
-              {rabbits.map(rabbit => (
-                <tr key={rabbit._id}>
-                  <td>{rabbit.name}</td>
-                  <td>{rabbit.age}</td>
-                  <td>{rabbit.height}</td>
-                  <td>{rabbit.weight}</td>
-                  <td>{rabbit.gender === 'male' ? 'Самець' : 'Самиця'}</td>
-                  <td>{rabbit.description}</td>
-                  <td>{rabbit.dateAdded ? formatDate(rabbit.dateAdded) : 'Н/Д'}</td>
+              {pandas.map(panda => (
+                <tr key={panda._id}>
+                  <td>{panda.name}</td>
+                  <td>{panda.age}</td>
+                  <td>{panda.height}</td>
+                  <td>{panda.weight}</td>
+                  <td>{panda.gender === 'male' ? 'Самець' : 'Самиця'}</td>
+                  <td>{panda.description}</td>
+                  <td>{panda.dateAdded ? formatDate(panda.dateAdded) : 'Н/Д'}</td>
                   <td>
                     <button
                       type="button"
                       className="btn btn-outline-primary btn-sm me-2"
-                      onClick={() => handleShowEditModal(rabbit)}
+                      onClick={() => handleShowEditModal(panda)}
                       disabled={loading}
                     >
                       Редагувати
@@ -282,7 +282,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
                     <button
                       type="button"
                       className="btn btn-outline-danger btn-sm"
-                      onClick={() => handleShowDeleteModal(rabbit)}
+                      onClick={() => handleShowDeleteModal(panda)}
                       disabled={loading}
                     >
                       Видалити
@@ -295,19 +295,19 @@ function Rehabilitation() {  // Стан для зберігання даних 
         </section>
       )}
 
-      {/* Модальне вікно для додавання нового зайця */}
-      <div 
-        className={`modal fade ${showAddModal ? 'show' : ''}`} 
-        id="addRabbitModal" 
-        tabIndex="-1" 
-        aria-labelledby="addRabbitModalLabel" 
+      {/* Модальне вікно для додавання нового пади */}
+      <div
+        className={`modal fade ${showAddModal ? 'show' : ''}`}
+        id="addRabbitModal"
+        tabIndex="-1"
+        aria-labelledby="addRabbitModalLabel"
         aria-hidden="true"
         style={{ display: showAddModal ? 'block' : 'none' }}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <header className="modal-header">
-              <h2 className="modal-title h5" id="addRabbitModalLabel">Додати нового зайця</h2>
+              <h2 className="modal-title h5" id="addRabbitModalLabel">Додати нового пади</h2>
               <button type="button" className="btn-close" onClick={() => setShowAddModal(false)} aria-label="Закрити"></button>
             </header>
             <div className="modal-body">
@@ -316,14 +316,14 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="name" className="col-sm-3 col-form-label">Ім'я</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="name" 
-                        name="name" 
-                        value={formData.name} 
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        name="name"
+                        value={formData.name}
                         onChange={handleInputChange}
-                        required 
+                        required
                       />
                     </div>
                   </div>
@@ -331,12 +331,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="age" className="col-sm-3 col-form-label">Вік (роки)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="age" 
-                        name="age" 
-                        value={formData.age} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="age"
+                        name="age"
+                        value={formData.age}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -348,12 +348,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="height" className="col-sm-3 col-form-label">Висота (см)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="height" 
-                        name="height" 
-                        value={formData.height} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="height"
+                        name="height"
+                        value={formData.height}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -365,12 +365,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="weight" className="col-sm-3 col-form-label">Вага (кг)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="weight" 
-                        name="weight" 
-                        value={formData.weight} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="weight"
+                        name="weight"
+                        value={formData.weight}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -382,11 +382,11 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="gender" className="col-sm-3 col-form-label">Стать</label>
                     <div className="col-sm-9">
-                      <select 
-                        className="form-select" 
-                        id="gender" 
-                        name="gender" 
-                        value={formData.gender} 
+                      <select
+                        className="form-select"
+                        id="gender"
+                        name="gender"
+                        value={formData.gender}
                         onChange={handleInputChange}
                         required
                       >
@@ -399,11 +399,11 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="description" className="col-sm-3 col-form-label">Опис</label>
                     <div className="col-sm-9">
-                      <textarea 
-                        className="form-control" 
-                        id="description" 
-                        name="description" 
-                        value={formData.description} 
+                      <textarea
+                        className="form-control"
+                        id="description"
+                        name="description"
+                        value={formData.description}
                         onChange={handleInputChange}
                         rows={3}
                       ></textarea>
@@ -420,7 +420,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                         Зачекайте...
                       </>
-                    ) : 'Додати зайця'}
+                    ) : 'Додати пади'}
                   </button>
                 </footer>
               </form>
@@ -428,26 +428,26 @@ function Rehabilitation() {  // Стан для зберігання даних 
           </div>
         </div>
       </div>
-      
+
       {/* Фон для модального вікна додавання */}
       {showAddModal && (
-        <div className="modal-backdrop fade show" 
-             onClick={() => setShowAddModal(false)}></div>
+        <div className="modal-backdrop fade show"
+          onClick={() => setShowAddModal(false)}></div>
       )}
 
-      {/* Модальне вікно для редагування існуючого зайця */}
-      <div 
-        className={`modal fade ${showEditModal ? 'show' : ''}`} 
-        id="editRabbitModal" 
-        tabIndex="-1" 
-        aria-labelledby="editRabbitModalLabel" 
+      {/* Модальне вікно для редагування існуючого пади */}
+      <div
+        className={`modal fade ${showEditModal ? 'show' : ''}`}
+        id="editRabbitModal"
+        tabIndex="-1"
+        aria-labelledby="editRabbitModalLabel"
         aria-hidden="true"
         style={{ display: showEditModal ? 'block' : 'none' }}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <header className="modal-header">
-              <h2 className="modal-title h5" id="editRabbitModalLabel">Редагувати зайця</h2>
+              <h2 className="modal-title h5" id="editRabbitModalLabel">Редагувати пади</h2>
               <button type="button" className="btn-close" onClick={() => setShowEditModal(false)} aria-label="Закрити"></button>
             </header>
             <div className="modal-body">
@@ -456,14 +456,14 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-name" className="col-sm-3 col-form-label">Ім'я</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="edit-name" 
-                        name="name" 
-                        value={formData.name} 
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="edit-name"
+                        name="name"
+                        value={formData.name}
                         onChange={handleInputChange}
-                        required 
+                        required
                       />
                     </div>
                   </div>
@@ -471,12 +471,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-age" className="col-sm-3 col-form-label">Вік (роки)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="edit-age" 
-                        name="age" 
-                        value={formData.age} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="edit-age"
+                        name="age"
+                        value={formData.age}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -488,12 +488,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-height" className="col-sm-3 col-form-label">Висота (см)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="edit-height" 
-                        name="height" 
-                        value={formData.height} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="edit-height"
+                        name="height"
+                        value={formData.height}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -505,12 +505,12 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-weight" className="col-sm-3 col-form-label">Вага (кг)</label>
                     <div className="col-sm-9">
-                      <input 
-                        type="number" 
-                        className="form-control" 
-                        id="edit-weight" 
-                        name="weight" 
-                        value={formData.weight} 
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="edit-weight"
+                        name="weight"
+                        value={formData.weight}
                         onChange={handleInputChange}
                         required
                         min="0"
@@ -522,11 +522,11 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-gender" className="col-sm-3 col-form-label">Стать</label>
                     <div className="col-sm-9">
-                      <select 
-                        className="form-select" 
-                        id="edit-gender" 
-                        name="gender" 
-                        value={formData.gender} 
+                      <select
+                        className="form-select"
+                        id="edit-gender"
+                        name="gender"
+                        value={formData.gender}
                         onChange={handleInputChange}
                         required
                       >
@@ -539,17 +539,17 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <div className="row mb-3">
                     <label htmlFor="edit-description" className="col-sm-3 col-form-label">Опис</label>
                     <div className="col-sm-9">
-                      <textarea 
-                        className="form-control" 
-                        id="edit-description" 
-                        name="description" 
-                        value={formData.description} 
+                      <textarea
+                        className="form-control"
+                        id="edit-description"
+                        name="description"
+                        value={formData.description}
                         onChange={handleInputChange}
                         rows={3}
                       ></textarea>
                     </div>
                   </div>
-                </fieldset>                
+                </fieldset>
                 <footer className="d-flex justify-content-end">
                   <button type="button" className="btn btn-secondary me-2" onClick={() => setShowEditModal(false)}>
                     Скасувати
@@ -568,19 +568,19 @@ function Rehabilitation() {  // Стан для зберігання даних 
           </div>
         </div>
       </div>
-      
+
       {/* Фон для модального вікна редагування */}
       {showEditModal && (
-        <div className="modal-backdrop fade show" 
-             onClick={() => setShowEditModal(false)}></div>
+        <div className="modal-backdrop fade show"
+          onClick={() => setShowEditModal(false)}></div>
       )}
 
-      {/* Модальне вікно для підтвердження видалення зайця */}
-      <div 
-        className={`modal fade ${showDeleteModal ? 'show' : ''}`} 
-        id="deleteRabbitModal" 
-        tabIndex="-1" 
-        aria-labelledby="deleteRabbitModalLabel" 
+      {/* Модальне вікно для підтвердження видалення пади */}
+      <div
+        className={`modal fade ${showDeleteModal ? 'show' : ''}`}
+        id="deleteRabbitModal"
+        tabIndex="-1"
+        aria-labelledby="deleteRabbitModalLabel"
         aria-hidden="true"
         style={{ display: showDeleteModal ? 'block' : 'none' }}
       >
@@ -592,16 +592,16 @@ function Rehabilitation() {  // Стан для зберігання даних 
             </header>
             <div className="modal-body">
               {rabbitToDelete && (
-                <p>Ви впевнені, що хочете видалити зайця <strong>{rabbitToDelete.name}</strong>?</p>
+                <p>Ви впевнені, що хочете видалити пади <strong>{rabbitToDelete.name}</strong>?</p>
               )}
             </div>
-            <footer className="modal-footer">              
+            <footer className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteModal(false)}>
                 Скасувати
               </button>
-              <button 
-                type="button" 
-                className="btn btn-danger" 
+              <button
+                type="button"
+                className="btn btn-danger"
                 onClick={handleDeleteRabbit}
                 disabled={loading}
               >
@@ -616,11 +616,11 @@ function Rehabilitation() {  // Стан для зберігання даних 
           </div>
         </div>
       </div>
-      
+
       {/* Фон для модального вікна видалення */}
       {showDeleteModal && (
-        <div className="modal-backdrop fade show" 
-             onClick={() => setShowDeleteModal(false)}></div>
+        <div className="modal-backdrop fade show"
+          onClick={() => setShowDeleteModal(false)}></div>
       )}
     </main>
   );

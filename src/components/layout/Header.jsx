@@ -26,7 +26,7 @@ function Header() {
               alt="Заєць" 
               className="site-logo rounded-circle me-2"
             />
-            <span className="fs-4">Сайт про зайців</span>
+            <span className="fs-4">Сайт про панд</span>
           </Link>
         </div>
 
@@ -35,19 +35,16 @@ function Header() {
             Головна
           </Link>
           <Link to="/morphology" className={`nav-link text-white ${location.pathname === '/morphology' ? 'active' : ''}`}>
-            Зовнішній вигляд зайців
+            Зовнішній вигляд панд
           </Link>
           <Link to="/nutrition" className={`nav-link text-white ${location.pathname === '/nutrition' ? 'active' : ''}`}>
-            Харчування зайців
+            Харчування панд
           </Link>
           <Link to="/population" className={`nav-link text-white ${location.pathname === '/population' ? 'active' : ''}`}>
-            Ареал зайців
+            Ареал панд
           </Link>
           <Link to="/photo" className={`nav-link text-white ${location.pathname === '/photo' ? 'active' : ''}`}>
-            Фотографії зайців
-          </Link>
-          <Link to="/rehabilitation" className={`nav-link text-white ${location.pathname === '/rehabilitation' ? 'active' : ''}`}>
-            Реабілітація
+            Фотографії панд
           </Link>
         </nav>
 

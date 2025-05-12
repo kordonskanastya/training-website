@@ -13,14 +13,14 @@ API реалізовано за допомогою вебфреймворку Ex
 
 ## API endpoints
 
-- `GET /api/rabbits` - отримати список всіх записів зайців
-- `GET /api/rabbits/:id` - отримати дані про зайця за ID
-- `POST /api/rabbits` - створити новий запис зайця
-- `PUT /api/rabbits/:id` - повністю оновити запис зайця за ID
-- `PATCH /api/rabbits/:id` - частково оновити запис зайця за ID
-- `DELETE /api/rabbits/:id` - видалити дані про зайця за ID
-- `HEAD /api/rabbits` - отримати метадані списку зайців
-- `OPTIONS /api/rabbits` - отримати список доступних HTTP методів
+- `GET /api/pandas` - отримати список всіх записів зайців
+- `GET /api/pandas/:id` - отримати дані про пади за ID
+- `POST /api/pandas` - створити новий запис пади
+- `PUT /api/pandas/:id` - повністю оновити запис пади за ID
+- `PATCH /api/pandas/:id` - частково оновити запис пади за ID
+- `DELETE /api/pandas/:id` - видалити дані про пади за ID
+- `HEAD /api/pandas` - отримати метадані списку зайців
+- `OPTIONS /api/pandas` - отримати список доступних HTTP методів
 
 ## Початок роботи
 
