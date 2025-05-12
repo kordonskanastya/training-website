@@ -2,12 +2,12 @@ import { Schema, model } from 'mongoose';
 
 // Інтерфейс для об'єкта "Заєць"
 interface IRabbit {
-    name: string; // Ім'я зайця
-    age: number; // Вік зайця у роках
-    height: number; // Висота зайця в сантиметрах
-    weight: number; // Вага зайця в кілограмах
-    gender: 'male' | 'female'; // Стать зайця: 'male' - самець, 'female' - самка
-    description?: string; // Опис зайця (необов'язкове поле)
+    name: string; // Ім'я панди
+    age: number; // Вік панди у роках
+    height: number; // Висота панди в сантиметрах
+    weight: number; // Вага панди в кілограмах
+    gender: 'male' | 'female'; // Стать панди: 'male' - самець, 'female' - самка
+    description?: string; // Опис панди (необов'язкове поле)
     dateAdded: Date; // Дата додавання запису до бази даних
 }
 
