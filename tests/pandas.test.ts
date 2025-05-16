@@ -342,12 +342,12 @@ describe('API вебдодатку сайту про панд', () => {
         it('має видалити запис про панди', async () => {
             // Створюємо тестового панди
             const testPanda = new Panda({
-                name: 'Стрибунець',
+                name: 'Panda4',
                 age: 2,
                 height: 28,
                 weight: 2.1,
                 gender: 'female',
-                description: 'Чорний заєць',
+                description: 'Panda4',
             });
             const savedPanda = await testPanda.save();
 

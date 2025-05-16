@@ -7,6 +7,7 @@ interface IPanda {
     height: number; // Висота панди в сантиметрах
     weight: number; // Вага панди в кілограмах
     gender: 'male' | 'female'; // Стать панди: 'male' - самець, 'female' - самка
+    bambooEatenKilo: number;
     description?: string; // Опис панди (необов'язкове поле)
     dateAdded: Date; // Дата додавання запису до бази даних
 }
@@ -33,6 +34,10 @@ const pandaSchema = new Schema<IPanda>({
         type: String,
         required: true, // Поле є обов'язковим
         enum: ['male', 'female'], // Допустимі значення: 'male' або 'female'
+    },
+    bambooEatenKilo: {
+        type: Number,
+        required: true, // Поле є обов'язковим
     },
     description: String, // Необов'язкове текстове поле
     dateAdded: {
