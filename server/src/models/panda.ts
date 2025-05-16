@@ -1,18 +1,19 @@
 import { Schema, model } from 'mongoose';
 
 // Інтерфейс для об'єкта "Заєць"
-interface IRabbit {
+interface IPanda {
     name: string; // Ім'я панди
     age: number; // Вік панди у роках
     height: number; // Висота панди в сантиметрах
     weight: number; // Вага панди в кілограмах
     gender: 'male' | 'female'; // Стать панди: 'male' - самець, 'female' - самка
+    bambooEatenKilo: number;
     description?: string; // Опис панди (необов'язкове поле)
     dateAdded: Date; // Дата додавання запису до бази даних
 }
 
 // Схема MongoDB для моделі "Заєць"
-const rabbitSchema = new Schema<IRabbit>({
+const pandaSchema = new Schema<IPanda>({
     name: {
         type: String,
         required: true, // Поле є обов'язковим
@@ -34,6 +35,10 @@ const rabbitSchema = new Schema<IRabbit>({
         required: true, // Поле є обов'язковим
         enum: ['male', 'female'], // Допустимі значення: 'male' або 'female'
     },
+    bambooEatenKilo: {
+        type: Number,
+        required: true, // Поле є обов'язковим
+    },
     description: String, // Необов'язкове текстове поле
     dateAdded: {
         type: Date,
@@ -42,5 +47,5 @@ const rabbitSchema = new Schema<IRabbit>({
 });
 
 // Створення моделі Mongoose на основі схеми
-export const Rabbit = model<IRabbit>('Rabbit', rabbitSchema);
-export type { IRabbit }; // Експортуємо інтерфейс для використання в інших файлах
+export const Panda = model<IPanda>('Panda', pandaSchema);
+export type { IPanda }; // Експортуємо інтерфейс для використання в інших файлах

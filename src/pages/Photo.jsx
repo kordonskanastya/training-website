@@ -25,14 +25,15 @@ function Photo() {
               <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" class="d-block w-100" alt="Велика панда сидить" />
             </a>
           </div>
-          <div class="carousel-item">
-            <a href="https://upload.wikimedia.org/wikipedia/commons/8/84/Panda_Cub_from_Wolong%2C_Sichuan%2C_China.JPG" target="_blank">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Panda_Cub_from_Wolong%2C_Sichuan%2C_China.JPG" class="d-block w-100" alt="Панда з заповідника Волун" />
+          <div class="carousel-item active">
+            <a href="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" class="d-block w-100" alt="Велика панда сидить" />
             </a>
           </div>
           <div class="carousel-item">
-            <a href="https://upload.wikimedia.org/wikipedia/commons/6/6d/Panda_Eating_Bamboo.jpg" target="_blank">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Panda_Eating_Bamboo.jpg" class="d-block w-100" alt="Панда їсть бамбук" />
+            <a href="https://www.wwf.de/fileadmin/_processed_/9/a/preview_18bea5afb6_Panda-Loop.jpg" target="_blank">
+              <img src="https://www.wwf.de/fileadmin/_processed_/9/a/preview_18bea5afb6_Panda-Loop.jpg"
+                class="d-block w-100" alt="Панда з заповідника Волун" />
             </a>
           </div>
         </div>

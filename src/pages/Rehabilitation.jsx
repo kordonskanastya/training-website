@@ -13,25 +13,26 @@ function Rehabilitation() {  // Стан для зберігання даних 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Стан для модального вікна видалення
-  const [rabbitToDelete, setRabbitToDelete] = useState(null); // Ідентифікатор пади для видалення
+  const [rabbitToDelete, setRabbitToDelete] = useState(null); // Ідентифікатор панди для видалення
   const [currentRabbit, setCurrentRabbit] = useState(null);
   const [toastMessage, setToastMessage] = useState({ text: '', type: 'success' });
 
   // Посилання до елемента спливаючих сповіщень toast
   const toastRef = useRef(null);
-  // Стан форми для додавання/редагування зайців
+  // Стан форми для додавання/редагування панд
   const [formData, setFormData] = useState({
     name: '',
     age: '',
     height: '',
     weight: '',
     gender: 'male',
-    description: ''
+    description: '',
+    bambooEatenKilo: '',
   });
 
-  // При рендерингу компонента, отримуємо всіх зайців
+  // При рендерингу компонента, отримуємо всіх панд
   useEffect(() => {
-    document.title = 'Реабілітація зайців - Сайт про зайців';
+    document.title = 'Реабілітація панд - Сайт про панд';
     fetchRabbits();
   }, []);
 
@@ -43,7 +44,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
     }
   }, [toastMessage]);
 
-  // Отримуємо всіх зайців з API
+  // Отримуємо всіх панд з API
   const fetchRabbits = async () => {
     try {
       setLoading(true);
@@ -53,7 +54,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
 
     } catch (err) {
       setError(`Помилка завантаження даних: ${err.message}`);
-      console.error('Помилка при отриманні даних про зайців:', err);
+      console.error('Помилка при отриманні даних про панд:', err);
       setRabbits([]);
 
     } finally {
@@ -67,7 +68,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
     let processedValue = value;
 
     // Конвертуємо числові значення з рядків у числа
-    if (['age', 'height', 'weight'].includes(name)) {
+    if (['age', 'height', 'weight', 'bambooEatenKilo'].includes(name)) {
       processedValue = value === '' ? '' : Number(value);
     }
 
@@ -77,7 +78,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
     });
   };
 
-  // Відкриваємо модальне вікно для додавання нового пади
+  // Відкриваємо модальне вікно для додавання нового панди
   const handleShowAddModal = () => {
     setFormData({
       name: '',
@@ -85,12 +86,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
       height: '',
       weight: '',
       gender: 'male',
-      description: ''
+      description: '',
+      bambooEatenKilo: ''
     });
     setShowAddModal(true);
   };
 
-  // Відкриваємо модальне вікно для редагування пади
+  // Відкриваємо модальне вікно для редагування панди
   const handleShowEditModal = (panda) => {
     setCurrentRabbit(panda);
     setFormData({
@@ -99,12 +101,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
       height: panda.height,
       weight: panda.weight,
       gender: panda.gender,
-      description: panda.description || ''
+      description: panda.description || '',
+      bambooEatenKilo: panda.panda,
     });
     setShowEditModal(true);
   };
 
-  // Додаємо нового пади
+  // Додаємо нового панди
   const handleAddRabbit = async (e) => {
     e.preventDefault();
 
@@ -120,14 +123,14 @@ function Rehabilitation() {  // Стан для зберігання даних 
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при створенні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при створенні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при додаванні пади:', err);
+      console.error('Помилка при додаванні панди:', err);
 
     } finally {
       setLoading(false);
     }
   };
 
-  // Оновлюємо існуючого пади
+  // Оновлюємо існуючого панди
   const handleUpdateRabbit = async (e) => {
     e.preventDefault();
 
@@ -139,13 +142,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
         panda._id === currentRabbit._id ? updatedRabbit : panda
       ));
       setShowEditModal(false);
-      setToastMessage({ text: `Дані про пади "${updatedRabbit.name}" оновлено!`, type: 'success' });
+      setToastMessage({ text: `Дані про панди "${updatedRabbit.name}" оновлено!`, type: 'success' });
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при оновленні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при оновленні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при оновленні пади:', err);
+      console.error('Помилка при оновленні панди:', err);
 
     } finally {
       setLoading(false);
@@ -158,7 +161,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
     setShowDeleteModal(true);
   };
 
-  // Видаляємо пади
+  // Видаляємо панди
   const handleDeleteRabbit = async () => {
     try {
       setLoading(true);
@@ -166,13 +169,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
       setRabbits(pandas.filter(panda => panda._id !== rabbitToDelete._id));
       setToastMessage({ text: `панда "${rabbitToDelete.name}" успішно видалено!`, type: 'success' });
       setShowDeleteModal(false); // Закриваємо модальне вікно
-      setRabbitToDelete(null); // Очищаємо дані пади для видалення
+      setRabbitToDelete(null); // Очищаємо дані панди для видалення
 
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message;
       setError(`Помилка при видаленні: ${errorMessage}`);
       setToastMessage({ text: `Помилка при видаленні: ${errorMessage}`, type: 'danger' });
-      console.error('Помилка при видаленні пади:', err);
+      console.error('Помилка при видаленні панди:', err);
 
     } finally {
       setLoading(false);
@@ -188,13 +191,13 @@ function Rehabilitation() {  // Стан для зберігання даних 
   return (
     <main className="container px-4 py-4">
       <header className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="h2 text-success">Реабілітація зайців</h1>
+        <h1 className="h2 text-success">Реабілітація панд</h1>
         <button
           className="btn btn-success"
           onClick={handleShowAddModal}
           disabled={loading}
         >
-          Додати пади
+          Додати панди
         </button>
       </header>
 
@@ -229,19 +232,19 @@ function Rehabilitation() {  // Стан для зберігання даних 
         </div>
       </div>
 
-      {/* Таблиця зайців */}
+      {/* Таблиця панд */}
       {loading && !error && (
         <div className="text-center my-5">
           <div className="spinner-border text-success" role="status">
             <span className="visually-hidden">Завантаження...</span>
           </div>
-          <p className="mt-2">Завантаження записів зайців...</p>
+          <p className="mt-2">Завантаження записів панд...</p>
         </div>
       )}
 
       {!loading && pandas.length === 0 && (
         <section className="alert alert-info">
-          Немає доступних записів про зайців у реабілітації. Додайте першого пади!
+          Немає доступних записів про панд у реабілітації. Додайте першого панди!
         </section>
       )}
 
@@ -255,6 +258,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
                 <th>Висота (см)</th>
                 <th>Вага (кг)</th>
                 <th>Стать</th>
+                <th>Бамбук</th>
                 <th>Опис</th>
                 <th>Дата додавання</th>
                 <th>Дії</th>
@@ -268,6 +272,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   <td>{panda.height}</td>
                   <td>{panda.weight}</td>
                   <td>{panda.gender === 'male' ? 'Самець' : 'Самиця'}</td>
+                  <td>{panda.bambooEatenKilo}</td>
                   <td>{panda.description}</td>
                   <td>{panda.dateAdded ? formatDate(panda.dateAdded) : 'Н/Д'}</td>
                   <td>
@@ -295,7 +300,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
         </section>
       )}
 
-      {/* Модальне вікно для додавання нового пади */}
+      {/* Модальне вікно для додавання нового панди */}
       <div
         className={`modal fade ${showAddModal ? 'show' : ''}`}
         id="addRabbitModal"
@@ -307,7 +312,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <header className="modal-header">
-              <h2 className="modal-title h5" id="addRabbitModalLabel">Додати нового пади</h2>
+              <h2 className="modal-title h5" id="addRabbitModalLabel">Додати нового панди</h2>
               <button type="button" className="btn-close" onClick={() => setShowAddModal(false)} aria-label="Закрити"></button>
             </header>
             <div className="modal-body">
@@ -397,6 +402,20 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   </div>
 
                   <div className="row mb-3">
+                    <label htmlFor="description" className="col-sm-3 col-form-label">Бамбук</label>
+                    <div className="col-sm-9">
+                      <textarea
+                        className="form-control"
+                        id="bambooEatenKilo"
+                        name="bambooEatenKilo"
+                        value={formData.bambooEatenKilo}
+                        onChange={handleInputChange}
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div className="row mb-3">
                     <label htmlFor="description" className="col-sm-3 col-form-label">Опис</label>
                     <div className="col-sm-9">
                       <textarea
@@ -420,7 +439,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                         Зачекайте...
                       </>
-                    ) : 'Додати пади'}
+                    ) : 'Додати панди'}
                   </button>
                 </footer>
               </form>
@@ -435,7 +454,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
           onClick={() => setShowAddModal(false)}></div>
       )}
 
-      {/* Модальне вікно для редагування існуючого пади */}
+      {/* Модальне вікно для редагування існуючого панди */}
       <div
         className={`modal fade ${showEditModal ? 'show' : ''}`}
         id="editRabbitModal"
@@ -447,7 +466,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <header className="modal-header">
-              <h2 className="modal-title h5" id="editRabbitModalLabel">Редагувати пади</h2>
+              <h2 className="modal-title h5" id="editRabbitModalLabel">Редагувати панди</h2>
               <button type="button" className="btn-close" onClick={() => setShowEditModal(false)} aria-label="Закрити"></button>
             </header>
             <div className="modal-body">
@@ -537,6 +556,20 @@ function Rehabilitation() {  // Стан для зберігання даних 
                   </div>
 
                   <div className="row mb-3">
+                    <label htmlFor="description" className="col-sm-3 col-form-label">Бамбук</label>
+                    <div className="col-sm-9">
+                      <textarea
+                        className="form-control"
+                        id="bambooEatenKilo"
+                        name="bambooEatenKilo"
+                        value={formData.bambooEatenKilo}
+                        onChange={handleInputChange}
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div className="row mb-3">
                     <label htmlFor="edit-description" className="col-sm-3 col-form-label">Опис</label>
                     <div className="col-sm-9">
                       <textarea
@@ -575,7 +608,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
           onClick={() => setShowEditModal(false)}></div>
       )}
 
-      {/* Модальне вікно для підтвердження видалення пади */}
+      {/* Модальне вікно для підтвердження видалення панди */}
       <div
         className={`modal fade ${showDeleteModal ? 'show' : ''}`}
         id="deleteRabbitModal"
@@ -592,7 +625,7 @@ function Rehabilitation() {  // Стан для зберігання даних 
             </header>
             <div className="modal-body">
               {rabbitToDelete && (
-                <p>Ви впевнені, що хочете видалити пади <strong>{rabbitToDelete.name}</strong>?</p>
+                <p>Ви впевнені, що хочете видалити панди <strong>{rabbitToDelete.name}</strong>?</p>
               )}
             </div>
             <footer className="modal-footer">

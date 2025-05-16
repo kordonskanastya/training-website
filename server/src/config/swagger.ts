@@ -31,7 +31,7 @@ export const swaggerSpec = {
                             'application/json': {
                                 schema: {
                                     type: 'array',
-                                    items: { $ref: '#/components/schemas/Rabbit' },
+                                    items: { $ref: '#/components/schemas/Panda' },
                                 },
                             },
                         },
@@ -46,7 +46,7 @@ export const swaggerSpec = {
                     required: true,
                     content: {
                         'application/json': {
-                            schema: { $ref: '#/components/schemas/Rabbit' },
+                            schema: { $ref: '#/components/schemas/Panda' },
                         },
                     },
                 },
@@ -55,7 +55,7 @@ export const swaggerSpec = {
                         description: "Створений об'єкт панди",
                         content: {
                             'application/json': {
-                                schema: { $ref: '#/components/schemas/Rabbit' },
+                                schema: { $ref: '#/components/schemas/Panda' },
                             },
                         },
                     },
@@ -82,7 +82,7 @@ export const swaggerSpec = {
                         description: "Об'єкт панди",
                         content: {
                             'application/json': {
-                                schema: { $ref: '#/components/schemas/Rabbit' },
+                                schema: { $ref: '#/components/schemas/Panda' },
                             },
                         },
                     },
@@ -106,7 +106,7 @@ export const swaggerSpec = {
                     required: true,
                     content: {
                         'application/json': {
-                            schema: { $ref: '#/components/schemas/Rabbit' },
+                            schema: { $ref: '#/components/schemas/Panda' },
                         },
                     },
                 },
@@ -115,7 +115,7 @@ export const swaggerSpec = {
                         description: "Оновлений об'єкт панди",
                         content: {
                             'application/json': {
-                                schema: { $ref: '#/components/schemas/Rabbit' },
+                                schema: { $ref: '#/components/schemas/Panda' },
                             },
                         },
                     },
@@ -138,7 +138,7 @@ export const swaggerSpec = {
                     required: true,
                     content: {
                         'application/json': {
-                            schema: { $ref: '#/components/schemas/Rabbit' },
+                            schema: { $ref: '#/components/schemas/Panda' },
                         },
                     },
                 },
@@ -147,7 +147,7 @@ export const swaggerSpec = {
                         description: "Оновлений об'єкт панди",
                         content: {
                             'application/json': {
-                                schema: { $ref: '#/components/schemas/Rabbit' },
+                                schema: { $ref: '#/components/schemas/Panda' },
                             },
                         },
                     },
@@ -179,7 +179,7 @@ export const swaggerSpec = {
         // Схеми даних
         schemas: {
             // Схема об'єкта Заєць
-            Rabbit: {
+            Panda: {
                 type: 'object',
                 required: ['name', 'age', 'height', 'weight', 'gender'],
                 properties: {
@@ -203,6 +203,10 @@ export const swaggerSpec = {
                         type: 'string',
                         enum: ['male', 'female'],
                         description: 'Стать панди',
+                    },
+                    bambooEatenKilo: {
+                        type: 'number',
+                        description: 'Вага бамбуку',
                     },
                     description: {
                         type: 'string',

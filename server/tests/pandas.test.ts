@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/server';
-import { Rabbit } from '../src/models/panda';
+import { Panda } from '../src/models/panda';
 import { container } from '../src/config/container';
 import { TYPES } from '../src/types/types';
 import { IDatabase } from '../src/interfaces/IDatabase';
@@ -12,8 +12,8 @@ import mongoose from 'mongoose';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-// Тести API вебдодатку сайту про зайців
-describe('API вебдодатку сайту про зайців', () => {
+// Тести API вебдодатку сайту про панд
+describe('API вебдодатку сайту про панд', () => {
     // Отримуємо екземпляр бази даних з контейнера
     const database = container.get<IDatabase>(TYPES.IDatabase);
     // Створюємо спеціальний URI для тестової бази даних
@@ -53,25 +53,25 @@ describe('API вебдодатку сайту про зайців', () => {
         });
     });
 
-    // Перед кожним тестом очищуємо колекцію зайців
+    // Перед кожним тестом очищуємо колекцію панд
     beforeEach(async () => {
-        await Rabbit.deleteMany({});
+        await Panda.deleteMany({});
     });
 
-    // Тести для створення запису про нового пади (POST-запит)
+    // Тести для створення запису про нового панди (POST-запит)
     describe('POST /api/pandas', () => {
-        it('має створити запис про нового пади', done => {
-            // Тестові дані пади
+        it('має створити запис про нового панди', done => {
+            // Тестові дані панди
             const panda = {
-                name: 'Вухань',
+                name: 'Panda1',
                 age: 2,
                 height: 30,
                 weight: 2.5,
                 gender: 'male' as const,
-                description: 'Сірий заєць',
+                description: 'Black panda',
             };
 
-            // Виконуємо POST-запит для створення запису про пади
+            // Виконуємо POST-запит для створення запису про панди
             chai.request(app)
                 .post('/api/pandas')
                 .send(panda)
@@ -94,80 +94,82 @@ describe('API вебдодатку сайту про зайців', () => {
         });
     });
 
-    // Тести для отримання всіх записів зайців (GET-запит)
+    // Тести для отримання всіх записів панд (GET-запит)
     describe('GET /api/pandas', () => {
-        it('має отримати всіх зайців', async () => {
-            // Створюємо тестовий запис пади
-            const testRabbit = new Rabbit({
-                name: 'Білан',
-                age: 3,
-                height: 35,
-                weight: 3.2,
-                gender: 'male',
-                description: 'Білий заєць',
+        it('має отримати всіх панд', async () => {
+            // Створюємо тестовий запис панди
+            const testPanda = new Panda({
+                name: 'Panda1',
+                age: 2,
+                height: 30,
+                weight: 2.5,
+                gender: 'male' as const,
+                description: 'Black panda',
             });
-            await testRabbit.save();
+            await testPanda.save();
 
-            // Виконуємо GET-запит для отримання всіх записів зайців
+            // Виконуємо GET-запит для отримання всіх записів панд
             const res = await chai.request(app).get('/api/pandas');
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('array');
             expect(res.body.length).to.equal(1);
-            expect(res.body[0]).to.have.property('name', 'Білан');
+            expect(res.body[0]).to.have.property('name', 'Panda1');
             expect(res.body[0]).to.have.property('gender', 'male');
-            expect(res.body[0]).to.have.property('description', 'Білий заєць');
+            expect(res.body[0]).to.have.property('description', 'Black panda');
             expect(res.body[0]).to.have.property('dateAdded');
             expect(new Date(res.body[0].dateAdded)).to.be.instanceOf(Date);
         });
     });
 
-    // Тести для отримання запису конкретного пади за ID (GET-запит)
+    // Тести для отримання запису конкретного панди за ID (GET-запит)
     describe('GET /api/pandas/:id', () => {
-        it('має отримати конкретного пади за id', async () => {
-            // Створюємо запис тестового пади
-            const testRabbit = new Rabbit({
-                name: 'Косий',
+        it('має отримати конкретного панди за id', async () => {
+            // Створюємо запис тестового панди
+            const testPanda = new Panda({
+                name: 'Panda2',
                 age: 1,
                 height: 25,
                 weight: 1.8,
                 gender: 'male',
-                description: 'Коричневий заєць',
+                description: 'Panda2',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
-            // Виконуємо GET-запит для отримання запису пади за ID
-            const res = await chai.request(app).get(`/api/pandas/${String(savedRabbit._id)}`);
+            // Виконуємо GET-запит для отримання запису панди за ID
+            const res = await chai.request(app).get(`/api/pandas/${String(savedPanda._id)}`);
             expect(res).to.have.status(200);
-            expect(res.body).to.have.property('name', 'Косий');
+            expect(res.body).to.have.property('name', 'Panda2');
             expect(res.body).to.have.property('age', 1);
             expect(res.body).to.have.property('height', 25);
             expect(res.body).to.have.property('weight', 1.8);
             expect(res.body).to.have.property('gender', 'male');
-            expect(res.body).to.have.property('description', 'Коричневий заєць');
+            expect(res.body).to.have.property('description', 'Panda2');
         });
 
-        it('має повернути 404 для неіснуючого пади', async () => {
-            // Виконуємо GET-запит для неіснуючого ID пади
+        it('має повернути 404 для неіснуючого панди', async () => {
+            // Виконуємо GET-запит для неіснуючого ID панди
             const res = await chai.request(app).get('/api/pandas/654321654321654321654321');
             expect(res).to.have.status(404);
         });
     });
 
-    // Тести для повного оновлення запису про пади (PUT-запит)
+    // Тести для повного оновлення запису про панди (PUT-запит)
     describe('PUT /api/pandas/:id', () => {
-        it('має повністю оновити запис про пади', async () => {
-            // Створюємо тестового пади
-            const testRabbit = new Rabbit({
+        it('має повністю оновити запис про панди', async () => {
+            // Створюємо тестового панди
+            const testPanda = new Panda({
                 name: 'Оригінальний',
                 age: 1,
                 height: 25,
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
-            // Дані для оновлення пади
+            // Дані для оновлення панди
             const updatedData = {
                 name: 'Оновлений',
                 age: 2,
@@ -177,10 +179,10 @@ describe('API вебдодатку сайту про зайців', () => {
                 description: 'Оновлений опис',
             };
 
-            // Виконуємо PUT-запит для повного оновлення запису про пади
+            // Виконуємо PUT-запит для повного оновлення запису про панди
             const res = await chai
                 .request(app)
-                .put(`/api/pandas/${String(savedRabbit._id)}`)
+                .put(`/api/pandas/${String(savedPanda._id)}`)
                 .send(updatedData);
 
             // Перевіряємо результат
@@ -196,16 +198,17 @@ describe('API вебдодатку сайту про зайців', () => {
         });
 
         it("має завершитися невдачею при відсутності обов'язкових полів", async () => {
-            // Створюємо тестового пади
-            const testRabbit = new Rabbit({
+            // Створюємо тестового панди
+            const testPanda = new Panda({
                 name: 'Оригінальний',
                 age: 1,
                 height: 25,
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
             // Неповні дані для оновлення (відсутні обов'язкові поля)
             const incompleteData = {
@@ -219,33 +222,34 @@ describe('API вебдодатку сайту про зайців', () => {
             // Виконуємо PUT-запит з неповними даними
             const res = await chai
                 .request(app)
-                .put(`/api/pandas/${String(savedRabbit._id)}`)
+                .put(`/api/pandas/${String(savedPanda._id)}`)
                 .send(incompleteData);
 
             // Перевіряємо, що запит завершився з помилкою
             expect(res).to.have.status(400);
 
             // Перевіряємо, що заєць не змінився
-            const unchangedRabbit = await Rabbit.findById(savedRabbit._id);
-            expect(unchangedRabbit).to.have.property('name', 'Оригінальний');
-            expect(unchangedRabbit).to.have.property('height', 25);
-            expect(unchangedRabbit).to.have.property('weight', 1.8);
+            const unchangedPanda = await Panda.findById(savedPanda._id);
+            expect(unchangedPanda).to.have.property('name', 'Оригінальний');
+            expect(unchangedPanda).to.have.property('height', 25);
+            expect(unchangedPanda).to.have.property('weight', 1.8);
         });
     });
 
-    // Тести для часткового оновлення запису про пади (PATCH-запит)
+    // Тести для часткового оновлення запису про панди (PATCH-запит)
     describe('PATCH /api/pandas/:id', () => {
-        it('має частково оновити запис про пади', async () => {
-            // Створюємо тестового пади
-            const testRabbit = new Rabbit({
+        it('має частково оновити запис про панди', async () => {
+            // Створюємо тестового панди
+            const testPanda = new Panda({
                 name: 'Оригінальний',
                 age: 1,
                 height: 25,
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
             // Дані для часткового оновлення
             const patchData = {
@@ -257,7 +261,7 @@ describe('API вебдодатку сайту про зайців', () => {
             // Виконуємо PATCH-запит
             const res = await chai
                 .request(app)
-                .patch(`/api/pandas/${String(savedRabbit._id)}`)
+                .patch(`/api/pandas/${String(savedPanda._id)}`)
                 .send(patchData);
 
             // Перевіряємо результат
@@ -273,16 +277,17 @@ describe('API вебдодатку сайту про зайців', () => {
         });
 
         it('демонструє різницю між PATCH і PUT з частковими оновленнями', async () => {
-            // Створюємо тестового пади
-            const testRabbit = new Rabbit({
+            // Створюємо тестового панди
+            const testPanda = new Panda({
                 name: 'Оригінальний',
                 age: 1,
                 height: 25,
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
             // Ті самі неповні дані, що не спрацювали з PUT, мають працювати з PATCH
             const partialData = {
@@ -291,12 +296,13 @@ describe('API вебдодатку сайту про зайців', () => {
                 // height і weight навмисно відсутні
                 gender: 'female',
                 description: 'Оновлений опис',
+                bambooEatenKilo: 6,
             };
 
             // Виконуємо PATCH-запит
             const res = await chai
                 .request(app)
-                .patch(`/api/pandas/${String(savedRabbit._id)}`)
+                .patch(`/api/pandas/${String(savedPanda._id)}`)
                 .send(partialData);
 
             // Перевіряємо результат
@@ -337,28 +343,29 @@ describe('API вебдодатку сайту про зайців', () => {
         });
     });
 
-    // Тести для видалення запису пади (DELETE-запит)
+    // Тести для видалення запису панди (DELETE-запит)
     describe('DELETE /api/pandas/:id', () => {
-        it('має видалити запис про пади', async () => {
-            // Створюємо тестового пади
-            const testRabbit = new Rabbit({
-                name: 'Стрибунець',
+        it('має видалити запис про панди', async () => {
+            // Створюємо тестового панди
+            const testPanda = new Panda({
+                name: 'Panda4',
                 age: 2,
                 height: 28,
                 weight: 2.1,
                 gender: 'female',
-                description: 'Чорний заєць',
+                description: 'Panda4',
+                bambooEatenKilo: 5,
             });
-            const savedRabbit = await testRabbit.save();
+            const savedPanda = await testPanda.save();
 
             // Виконуємо DELETE-запит
-            const res = await chai.request(app).delete(`/api/pandas/${String(savedRabbit._id)}`);
+            const res = await chai.request(app).delete(`/api/pandas/${String(savedPanda._id)}`);
             expect(res).to.have.status(200);
-            expect(res.body).to.have.property('message', 'Запис про пади видалено');
+            expect(res.body).to.have.property('message', 'Запис про панди видалено');
 
-            // Перевіряємо, що запис про пади дійсно видалено з бази
-            const findRabbit = await Rabbit.findById(savedRabbit._id);
-            expect(findRabbit).to.be.null;
+            // Перевіряємо, що запис про панди дійсно видалено з бази
+            const findPanda = await Panda.findById(savedPanda._id);
+            expect(findPanda).to.be.null;
         });
     });
 });

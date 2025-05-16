@@ -22,8 +22,8 @@ function Header() {
         <div className="logo-container">
           <Link to="/" className="text-white text-decoration-none d-flex align-items-center">
             <img 
-              src="/images/european-hare-6121jpg.webp" 
-              alt="Заєць" 
+              src="https://www.wwf.de/fileadmin/_processed_/9/a/preview_18bea5afb6_Panda-Loop.jpg" 
+              alt="Panda" 
               className="site-logo rounded-circle me-2"
             />
             <span className="fs-4">Сайт про панд</span>
@@ -42,6 +42,9 @@ function Header() {
           </Link>
           <Link to="/population" className={`nav-link text-white ${location.pathname === '/population' ? 'active' : ''}`}>
             Ареал панд
+          </Link>
+          <Link to="/rehabilitation" className={`nav-link text-white ${location.pathname === '/population' ? 'active' : ''}`}>
+            Реабілітація
           </Link>
           <Link to="/photo" className={`nav-link text-white ${location.pathname === '/photo' ? 'active' : ''}`}>
             Фотографії панд
