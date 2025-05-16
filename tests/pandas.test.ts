@@ -98,15 +98,15 @@ describe('API вебдодатку сайту про панд', () => {
     describe('GET /api/pandas', () => {
         it('має отримати всіх панд', async () => {
             // Створюємо тестовий запис панди
-            const panda = {
+            const testPanda = new Panda({
                 name: 'Panda1',
                 age: 2,
                 height: 30,
                 weight: 2.5,
                 gender: 'male' as const,
                 description: 'Black panda',
-            };
-            await panda.save();
+            });
+            await testPanda.save();
 
             // Виконуємо GET-запит для отримання всіх записів панд
             const res = await chai.request(app).get('/api/pandas');
@@ -132,6 +132,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 1.8,
                 gender: 'male',
                 description: 'Panda2',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 
@@ -164,6 +165,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 
@@ -204,6 +206,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 
@@ -244,6 +247,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 
@@ -281,6 +285,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 1.8,
                 gender: 'male',
                 description: 'Початковий опис',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 
@@ -291,6 +296,7 @@ describe('API вебдодатку сайту про панд', () => {
                 // height і weight навмисно відсутні
                 gender: 'female',
                 description: 'Оновлений опис',
+                bambooEatenKilo: 6,
             };
 
             // Виконуємо PATCH-запит
@@ -348,6 +354,7 @@ describe('API вебдодатку сайту про панд', () => {
                 weight: 2.1,
                 gender: 'female',
                 description: 'Panda4',
+                bambooEatenKilo: 5,
             });
             const savedPanda = await testPanda.save();
 

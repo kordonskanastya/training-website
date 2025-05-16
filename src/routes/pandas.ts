@@ -1,17 +1,17 @@
 import { Router, Request, Response } from 'express';
 import { container } from '../config/container';
-import { RabbitRepository } from '../repositories/RabbitRepository';
+import { PandaRepository } from '../repositories/PandaRepository';
 
 // Створюємо новий обробник HTTP-запитів Express
 const router = Router();
 // Отримуємо екземпляр репозиторію панд з контейнера інверсії залежностей
-const rabbitRepository = container.get(RabbitRepository);
+const pandaRepository = container.get(PandaRepository);
 
 // Обробка HTTP-запиту GET / - отримання всіх записів панд
 router.get('/', (async (_req: Request, res: Response) => {
     try {
         // Отримуємо всі записи панд з бази даних через репозиторій
-        const pandas = await rabbitRepository.findAll();
+        const pandas = await pandaRepository.findAll();
         res.json(pandas);
     } catch (error) {
         // Обробка помилки
@@ -24,7 +24,7 @@ router.get('/', (async (_req: Request, res: Response) => {
 router.get('/:id', (async (req: Request, res: Response) => {
     try {
         // Пошук панди за ідентифікатором
-        const panda = await rabbitRepository.findById(req.params.id);
+        const panda = await pandaRepository.findById(req.params.id);
         if (panda) {
             res.json(panda);
         } else {
@@ -42,7 +42,7 @@ router.get('/:id', (async (req: Request, res: Response) => {
 router.post('/', (async (req: Request, res: Response) => {
     try {
         // Створюємо новий запис панди з даних запиту
-        const newRabbit = await rabbitRepository.create(req.body);
+        const newRabbit = await pandaRepository.create(req.body);
         // Повертаємо статус 201 (Created) і дані створеного панди
         res.status(201).json(newRabbit);
     } catch (error) {
@@ -67,7 +67,7 @@ router.put('/:id', (async (req: Request, res: Response) => {
         }
 
         // Оновлюємо панди з вказаним ID
-        const panda = await rabbitRepository.update(req.params.id, req.body);
+        const panda = await pandaRepository.update(req.params.id, req.body);
         if (panda) {
             return res.json(panda);
         } else {
@@ -85,7 +85,7 @@ router.put('/:id', (async (req: Request, res: Response) => {
 router.patch('/:id', (async (req: Request, res: Response) => {
     try {
         // Часткове оновлення запису панди - передаються лише ті поля, які потрібно змінити
-        const panda = await rabbitRepository.patch(req.params.id, req.body);
+        const panda = await pandaRepository.patch(req.params.id, req.body);
         if (panda) {
             res.json(panda);
         } else {
@@ -103,7 +103,7 @@ router.patch('/:id', (async (req: Request, res: Response) => {
 router.delete('/:id', (async (req: Request, res: Response) => {
     try {
         // Видаляємо дані про панди за ID
-        const panda = await rabbitRepository.delete(req.params.id);
+        const panda = await pandaRepository.delete(req.params.id);
         if (panda) {
             // У разі успіху повертаємо повідомлення про видалення
             res.json({ message: 'Запис про панди видалено' });
